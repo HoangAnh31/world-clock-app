@@ -1,23 +1,21 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import CitiesForm from "./Components/CitiesForm";
+import UserLocation from "./Components/UserLocation";
+import WorldClockList from "./Components/WorldClockList";
+import { WorldClockDataProvider } from "./Hooks/useWorldClockContext";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="max-w-5xl mx-auto">
+      {/**Display City name and timezone */}
+      <UserLocation></UserLocation>
+      <WorldClockDataProvider>
+        {/**Display Selectbox Citied */}
+        <CitiesForm></CitiesForm>
+
+        {/**Display World Clock */}
+        <WorldClockList></WorldClockList>
+      </WorldClockDataProvider>
     </div>
   );
 }
