@@ -9,7 +9,7 @@ const WorldClockCard = (props) => {
           Short label: <strong>{props.shortLabel}</strong>
         </p>
         <p className="text-gray-700 text-base mt-2">
-          Current local time: <strong>{props.currentLocalTime}</strong>
+          Current time: <strong>{props.currentLocalTime}</strong>
         </p>
         <p className="text-gray-700 text-base mt-2">
           City's timezone abbreviations: <strong>{props.abbreviation}</strong>

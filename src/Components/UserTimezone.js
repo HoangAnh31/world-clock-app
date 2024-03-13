@@ -1,4 +1,5 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect } from "react";
+import { useData } from "../Hooks/useWorldClockContext";
 
 const UserTimezone = (props) => {
   const getCurrentTime = useCallback(() => {
@@ -11,7 +12,8 @@ const UserTimezone = (props) => {
     };
     return new Date().toLocaleTimeString("en-US", options);
   }, [props.timezone]);
-  const [currentTime, setCurrentTime] = useState(getCurrentTime());
+
+  const { currentTime, setCurrentTime } = useData(getCurrentTime());
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -21,7 +23,7 @@ const UserTimezone = (props) => {
     return () => {
       clearInterval(intervalId);
     };
-  }, [getCurrentTime]);
+  }, [setCurrentTime, getCurrentTime]);
 
   return (
     <>

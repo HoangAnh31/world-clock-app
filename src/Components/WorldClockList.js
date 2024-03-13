@@ -6,7 +6,7 @@ const WorldClockList = () => {
   const { listWorldClock } = useData();
 
   let content = (
-    <p className="text-center col-span-3">Empty world clock list!!!!</p>
+    <p className="text-center col-span-4">Empty world clock list!!!!</p>
   );
   if (listWorldClock.length > 0) {
     content = listWorldClock.map((item, index) => (
@@ -21,7 +21,7 @@ const WorldClockList = () => {
     ));
   }
 
-  return <div className="mt-6 grid grid-cols-3 gap-6 ">{content}</div>;
+  return <div className="mt-6 grid grid-cols-4 gap-6 ">{content}</div>;
 };
 
 export default WorldClockList;

@@ -1,33 +1,17 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Select from "react-select";
 import { INITIAL_CITIES } from "../Docs/Data";
 import { useData } from "../Hooks/useWorldClockContext";
+import { format, utcToZonedTime } from "date-fns-tz";
+import enUS from "date-fns/locale/en-US";
 
 const MultiSelectDropdown = () => {
   const [selectedOptions, setSelectedOptions] = useState([]);
   const [error, setError] = useState(false);
-  const { setWorldClockData } = useData();
+  const { setWorldClockData, currentTime } = useData();
 
   const getShortlabel = (cityName) => {
     return cityName.slice(0, 3).toUpperCase();
-  };
-
-  const formatDateTime = (datetimeString) => {
-    const options = {
-      weekdays: "short",
-      day: "2-digit",
-      month: "2-digit",
-      year: "2-digit",
-      hour: "2-digit",
-      minute: "2-digit",
-      second: "2-digit",
-    };
-
-    const formattedDateTime = new Intl.DateTimeFormat("en-US", options).format(
-      new Date(datetimeString)
-    );
-
-    return formattedDateTime;
   };
 
   const convertSecondsToTime = (timeDiff) => {
@@ -50,11 +34,17 @@ const MultiSelectDropdown = () => {
       `https://worldtimeapi.org/api/timezone/${timezone}`
     );
     const data = await response.json();
+    console.log(data);
+
+    const localTime = utcToZonedTime(data.utc_datetime, data.timezone);
 
     const objClock = {
       cityName,
       shortLabel: getShortlabel(cityName),
-      localTime: formatDateTime(data.datetime),
+      localTime: format(localTime, "dd-MM-yyyy HH:mm:ss", {
+        timeZone: data.timezone,
+        locale: enUS,
+      }).toString(),
       abbreviation: data.abbreviation,
       timeDiff: convertSecondsToTime(data.raw_offset),
     };
@@ -63,13 +53,19 @@ const MultiSelectDropdown = () => {
   };
 
   const convertToArrWorldClock = async (arrSelected) => {
-    console.log(arrSelected);
     const arrWorldClock = await Promise.all(
       arrSelected.map(async (objOpt) => await fetchDataClock(objOpt))
     );
-    console.log(arrWorldClock);
     setWorldClockData(arrWorldClock);
   };
+
+  useEffect(
+    () => {
+      convertToArrWorldClock(selectedOptions);
+    },
+    [currentTime, selectedOptions],
+    convertToArrWorldClock
+  );
 
   const handleMultiSelectChange = (selectedOptions) => {
     const limitCities = 4;
