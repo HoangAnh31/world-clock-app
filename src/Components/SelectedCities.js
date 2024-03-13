@@ -5,7 +5,7 @@ import { useData } from "../Hooks/useWorldClockContext";
 import { format, utcToZonedTime } from "date-fns-tz";
 import enUS from "date-fns/locale/en-US";
 
-const MultiSelectDropdown = () => {
+const SelectedCities = () => {
   const [selectedOptions, setSelectedOptions] = useState([]);
   const [error, setError] = useState(false);
   const { setWorldClockData, currentTime } = useData();
@@ -96,4 +96,4 @@ const MultiSelectDropdown = () => {
   );
 };
 
-export default MultiSelectDropdown;
+export default SelectedCities;

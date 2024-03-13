@@ -1,5 +1,5 @@
 import "./App.css";
-import CitiesForm from "./Components/CitiesForm";
+import SelectedCities from "./Components/SelectedCities";
 import UserLocation from "./Components/UserLocation";
 import WorldClockList from "./Components/WorldClockList";
 import { WorldClockDataProvider } from "./Hooks/useWorldClockContext";
@@ -12,7 +12,7 @@ function App() {
         <UserLocation></UserLocation>
 
         {/**Display Selectbox Citied */}
-        <CitiesForm></CitiesForm>
+        <SelectedCities></SelectedCities>
 
         {/**Display World Clock */}
         <WorldClockList></WorldClockList>
